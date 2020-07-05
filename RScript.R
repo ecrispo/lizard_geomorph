@@ -13,15 +13,22 @@ digitize2d(filelist,
   MultScale = FALSE,
   verbose = TRUE
 )
-#For some reason I got missing data (NA) for some landmarks.
 
 #You now have a tps file called "newFile" that contains the data you just collected.
 #See page 17 of Quick Guide to Geomorph:
-readland.tps("newFile2.tps", specID = "ID", readcurves = FALSE, warnmsg = TRUE)
-#For some reason I am getting warning message that there is no scale for some images (SCALE=)
-#Deleted missing landmark data and changed number of landmarks, and no it is working okay
-#Can estimate missing landmarks - see page 26 of Quick Guide to Geomorph
+myData<-readland.tps("newFile.tps", specID = "ID", readcurves = FALSE, warnmsg = TRUE)
 
 #Generalized Procrustes Analysis
 #Starts on page 29 of Quick Guide to Geomorph 
+#Starts on page 63 of Zelditch
+#There is no partial or relative warps in geomorph
+myGPA<-gpagen(myData, curves = NULL, surfaces = NULL, PrinAxes = TRUE,
+       max.iter = NULL, ProcD = TRUE, Proj = TRUE, print.progress = TRUE)
+summary(myGPA)
+myGPA$coords
+myGPA$Csize
+plotAllSpecimens(myGPA$coords,mean=F,links=fish.gpa$links)
+#Try mean=T option to plot the consensus landmark positions
+?plotAllSpecimens
 
+#Data Analysis page 43 of Quick Guide to Geomorph
