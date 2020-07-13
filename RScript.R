@@ -32,3 +32,6 @@ plotAllSpecimens(myGPA$coords,mean=F,links=fish.gpa$links)
 ?plotAllSpecimens
 
 #Data Analysis page 43 of Quick Guide to Geomorph
+#Relative warps on page 228 of Schlager (Morpho package)
+install.packages("Morpho")
+library(Morpho)
