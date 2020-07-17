@@ -1,6 +1,5 @@
 install.packages("devtools")
 devtools::install_github("geomorphR/geomorph", ref = "Stable", build_vignettes = TRUE)
-install.packages("Morpho")
 library(geomorph)
 #Make sure to set the working directory - where specimen photos are saved
 
@@ -32,30 +31,34 @@ plotAllSpecimens(myGPA$coords,mean=T)
 ?plotAllSpecimens
 
 #Data Analysis page 43 of Quick Guide to Geomorph
+#First create a new variable that includes the site
 myGPA$site=c("lake","lake","pond","pond")
 is.factor(myGPA$site)
 myGPA$site<-as.factor(myGPA$site)
 myGPA$site
 
+#Create a data frame
 gdf1 <- geomorph.data.frame(coords = myGPA$coords, site = myGPA$site,
                            logcs = log(myGPA$Csize))
 gdf1
-procD.lm(coords ~ site + logcs, data = gdf1, iter = 999,
-         RRPP = FALSE, print.progress = T)
-res <- procD.lm(coords ~ logcs,data=gdf1)
-res
 
-#EXAMPLE
-data("plethodon")
-plethodon$site
-is.factor(plethodon$site)
-data(plethodon) # example dataset
-Y.gpa <- gpagen(plethodon$land, print.progress = FALSE) # GPA-alignment
-pleth.gdf <- geomorph.data.frame(shape = Y.gpa$coords,
-                           site = plethodon$site, species = plethodon$species) # make geomorph data frame
-# permutation option 1: randomize raw values
-procD.lm(shape ~ species * site, data = pleth.gdf, iter = 999,
-         RRPP = FALSE, print.progress = FALSE)
+#Perform a linear model, MANCOVA
+#Response variable is the landmark coordinates 
+#Explanatory variable is the site
+#Covariate is the log of the centroid size
+model1<-procD.lm(coords ~ site + logcs, data = gdf1, iter = 999,
+         RRPP = FALSE, print.progress = T)
+anova(model1)
+
+#Examine effects of centroid size alone (ALLOMETRY).
+res <- procD.lm(coords ~ logcs,data=gdf1)
+summary(res)
+
+#Discuss type I/II/II SS and what permutation of residuals means
+#Discuss why log the centroid size (more scatter as size increases)
+hist(myGPA$Csize)
+hist(log(myGPA$Csize))
+#Discuss coordinates versus partial warps (see chapter 5 of Zelditch)
 
 
 
