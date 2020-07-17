@@ -30,6 +30,8 @@ plotAllSpecimens(myGPA$coords,mean=T)
 #Try mean=T option to plot the consensus landmark positions
 ?plotAllSpecimens
 
+
+
 #Data Analysis page 43 of Quick Guide to Geomorph
 #First create a new variable that includes the site
 myGPA$site=c("lake","lake","pond","pond")
@@ -46,9 +48,17 @@ gdf1
 #Response variable is the landmark coordinates 
 #Explanatory variable is the site
 #Covariate is the log of the centroid size
-model1<-procD.lm(coords ~ site + logcs, data = gdf1, iter = 999,
-         RRPP = FALSE, print.progress = T)
+model1<-procD.lm(coords ~ site + logcs, data = gdf1, iter = 999)
 anova(model1)
+
+#View coordinates in a different format
+y<-two.d.array(myGPA$coords)
+y
+model2<-procD.lm(y~gdf1$site+gdf1$logcs,iter=999)
+anova(model2)
+
+model3<-procD.lm(myGPA$coords~myGPA$site+log(myGPA$Csize),iter=999)
+anova(model3)
 
 #Examine effects of centroid size alone (ALLOMETRY).
 res <- procD.lm(coords ~ logcs,data=gdf1)
@@ -60,5 +70,7 @@ hist(myGPA$Csize)
 hist(log(myGPA$Csize))
 #Discuss coordinates versus partial warps (see chapter 5 of Zelditch)
 
+
+plotTangentSpace(myGPA$coords,groups=myGPA$site,legend=T,label=T)
 
 
