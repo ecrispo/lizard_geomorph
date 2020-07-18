@@ -57,6 +57,7 @@ y
 model2<-procD.lm(y~gdf1$site+gdf1$logcs,iter=999)
 anova(model2)
 
+#Use model 3 as it is the simplest:
 model3<-procD.lm(myGPA$coords~myGPA$site+log(myGPA$Csize),iter=999)
 anova(model3)
 
@@ -66,8 +67,8 @@ summary(res)
 
 #Discuss type I/II/II SS and what permutation of residuals means
 #Discuss why log the centroid size (more scatter as size increases)
-hist(myGPA$Csize)
-hist(log(myGPA$Csize))
+hist(myGPA$Csize,xlab="Centroid Size",ylab="Number of fish",main="")
+hist(log(myGPA$Csize),xlab="Log transformed centroid size",ylab="Number of fish",main="")
 #Discuss coordinates versus partial warps (see chapter 5 of Zelditch)
 
 
