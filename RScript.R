@@ -1,6 +1,9 @@
 install.packages("devtools")
+install.packages("Rtools")
+install.packages("RRPP")
 devtools::install_github("geomorphR/geomorph", ref = "Stable", build_vignettes = TRUE)
 library(geomorph)
+packageVersion('geomorph')
 #Make sure to set the working directory - where specimen photos are saved
 
 filelist <- c("imageLake5.jpg", "imageLake48.jpg", "imagePond5.jpg", "imagePond6.jpg")
@@ -40,6 +43,7 @@ myGPA$site<-as.factor(myGPA$site)
 myGPA$site
 
 #Create a data frame
+#This step not needed
 gdf1 <- geomorph.data.frame(coords = myGPA$coords, site = myGPA$site,
                            logcs = log(myGPA$Csize))
 gdf1
@@ -65,6 +69,10 @@ anova(model3)
 res <- procD.lm(coords ~ logcs,data=gdf1)
 summary(res)
 
+modelInteraction<-procD.lm(myGPA$coords~myGPA$site*log(myGPA$Csize),iter=999)
+anova(modelInteraction)
+
+
 #Discuss type I/II/II SS and what permutation of residuals means
 #Discuss why log the centroid size (more scatter as size increases)
 hist(myGPA$Csize,xlab="Centroid Size",ylab="Number of fish",main="")
@@ -73,5 +81,30 @@ hist(log(myGPA$Csize),xlab="Log transformed centroid size",ylab="Number of fish"
 
 
 plotTangentSpace(myGPA$coords,groups=myGPA$site,legend=T,label=T)
+
+
+# I used this to be able to make PDF from Rmd file: tinytex::install_tinytex()
+#library(tinytex) #It installed properly
+
+?vignettes
+vignette("geomorph.PCA")
+vignette("geomorph.assistance")
+vignette("geomorph.functions")
+vignette("geomorph.digitize3D")
+
+#Let's do a PCA and plot the coordinates
+#Calculate the PC and determine the proportion of the variation explained by each
+PCA <- gm.prcomp(myGPA$coords)
+summary(PCA)
+
+
+plot(PCA, pch = 22, bg = c(rep("red", 2), rep("blue", 2)), 
+     cex = 1.5,groups=myGPA$site)
+legend(locator(1),levels(myGPA$site),pch=15, cex=0.8, col=c("red","blue"))
+
+
+
+plotTangentSpace(myGPA$coords, axis1 = 1, axis2 = 2, warpgrids = TRUE, mesh = NULL, label = TRUE,
+                 groups = myGPA$site, legend = TRUE)
 
 
