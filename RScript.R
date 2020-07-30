@@ -86,7 +86,7 @@ histogram(~myGPA$Csize|myGPA$site)
 #Let's do a PCA and plot the coordinates
 #Calculate the PC and determine the proportion of the variation explained by each
 PCA <- gm.prcomp(myGPA$coords)
-summary(PCA)
+PCA
 plot(PCA, pch = 22, bg = c(rep("red", 2), rep("blue", 2)), cex = 1.5)
 #After using the following code, you need to click on figure where you want legend to appear
 legend(locator(1),levels(myGPA$site),pch=15, cex=0.8, col=c("red","blue"))
@@ -96,7 +96,7 @@ plotTangentSpace(myGPA$coords,groups=myGPA$site,legend=T,label=T)
 plotTangentSpace(myGPA$coords, axis1 = 1, axis2 = 2, warpgrids = TRUE, mesh = NULL, label = TRUE,
                  groups = myGPA$site, legend = TRUE)
 #If we want to only visualize the shape changes represented by PC scores:
-res <- plotTangentSpace(myGPA$coords, groups = factor(paste(myGPA$site)))
+res <- plotTangentSpace(myGPA$coords, groups = myGPA$site)
 ref<-mshape(myGPA$coords)
 #The first shows us what the minimum PC1 score represents in terms of shape change:
 plotRefToTarget(M1=ref, M2=res$pc.shapes$PC1min, method="TPS")
@@ -113,9 +113,21 @@ library(Morpho)
 RW<-relWarps(myData, scale = TRUE, CSinit = TRUE, alpha = 0, 
          orp = TRUE,  noalign = FALSE)
 RW
+?relWarps
 #Using code above, the Var values for expected (exVar) and cumulative (cumVar) 
 #variance should be same values you got using geomorph.
 #The bescores are individual PC scores for each specimen.
 #Plot them below, as above:
 plot(RW$bescores,pch = 22, bg = c(rep("red", 2), rep("blue", 2)), cex = 1.5)
-
+#We have scores for three PC axes for each of our specimens:
+RW$bescores
+#We have centroid sizes for each specimen:
+myGPA$Csize
+variable1<-RW$bescores[,1]
+variable1
+#Is there a correlation between PC1 and size?
+cor.test(variable1,myGPA$Csize)
+variable2<-RW$bescores[,2]
+variabl2
+#Is there a correlation between PC2 and size?
+cor.test(variable2,myGPA$Csize)
