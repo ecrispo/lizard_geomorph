@@ -90,13 +90,7 @@ PCA
 plot(PCA, pch = 22, bg = c(rep("red", 2), rep("blue", 2)), cex = 1.5)
 #After using the following code, you need to click on figure where you want legend to appear
 legend(locator(1),levels(myGPA$site),pch=15, cex=0.8, col=c("red","blue"))
-#Can also use the following code if you prefer this figure format.
-#It displays differences in shape along each of the two axes. These are called deformation grids
-plotTangentSpace(myGPA$coords,groups=myGPA$site,legend=T,label=T)
-plotTangentSpace(myGPA$coords, axis1 = 1, axis2 = 2, warpgrids = TRUE, mesh = NULL, label = TRUE,
-                 groups = myGPA$site, legend = TRUE)
 #If we want to only visualize the shape changes represented by PC scores:
-res <- plotTangentSpace(myGPA$coords, groups = myGPA$site)
 ref<-mshape(myGPA$coords)
 #The first shows us what the minimum PC1 score represents in terms of shape change:
 plotRefToTarget(M1=ref, M2=res$pc.shapes$PC1min, method="TPS")
