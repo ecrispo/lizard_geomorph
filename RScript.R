@@ -1,3 +1,4 @@
+#Script created using R version 4.0.2 and geomorph version 3.2.1
 #Install the needed packages
 install.packages("devtools")
 install.packages("Rtools")
