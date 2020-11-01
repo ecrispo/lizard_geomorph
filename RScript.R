@@ -123,6 +123,6 @@ variable1
 #Is there a correlation between PC1 and size?
 cor.test(variable1,myGPA$Csize)
 variable2<-RW$bescores[,2]
-variabl2
+variable2
 #Is there a correlation between PC2 and size?
 cor.test(variable2,myGPA$Csize)
