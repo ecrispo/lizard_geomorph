@@ -94,14 +94,13 @@ legend(locator(1),levels(myGPA$site),pch=15, cex=0.8, col=c("red","blue"))
 #If we want to only visualize the shape changes represented by PC scores:
 ref<-mshape(myGPA$coords)
 #The first shows us what the minimum PC1 score represents in terms of shape change:
-plotRefToTarget(M1=ref, M2=res$pc.shapes$PC1min, method="TPS")
+plotRefToTarget(PCA$shapes$shapes.PC1$min, ref, method="TPS")
 #The second shows us what the maximum PC1 score represents in terms of shape change:
-plotRefToTarget(M1=ref, M2=res$pc.shapes$PC1max, method="TPS")
+plotRefToTarget(PCA$shapes$shapes.PC1$max, ref, method="TPS")
 #You see that PC1 represents a shift in the tail from a downward tilt to an upward tilt.
 #It is most likely due to error in placing the fish in a straight plane before taking photos.
-#And the next two lines of code do the same for PC2:
-plotRefToTarget(M1=ref, M2=res$pc.shapes$PC2min, method="TPS")
-plotRefToTarget(M1=ref, M2=res$pc.shapes$PC2max, method="TPS")
+plotRefToTarget(PCA$shapes$shapes.PC2$min, ref, method="TPS")
+plotRefToTarget(PCA$shapes$shapes.PC2$max, ref, method="TPS")
 #You see that PC2 represents a shortening and fattening of the fish.
 #Get get a list of PC scores for each specimen in Morpho package
 library(Morpho)
