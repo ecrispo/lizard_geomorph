@@ -13,7 +13,7 @@ This work is licensed under a [Creative Commons Attribution-NonCommercial-ShareA
 
 ## Acknowledgements
 
-I would like to extend a sincere thank you to Dr. Joshua Cohen (Pace University) for peer reviewing this educational resource.
+I would like to extend a sincere thank you to Dr. Joshua Cohen (Pace University) for peer reviewing this educational resource. Funding was provided by the National Science Foundation in the form of a Research Opportunity Award (DEB-1929679).
 
 
 ## Introduction
